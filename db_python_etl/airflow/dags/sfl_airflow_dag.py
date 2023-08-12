@@ -1,6 +1,6 @@
 ###Import packages
 import logging
-import datetime
+from datetime import datetime
 import hashlib
 import pandas as pd
 import psycopg2  ## Used to programmatically make connections with PostgreSQL
@@ -249,5 +249,4 @@ with DAG(
     schedule = "@hourly",
     default_args = args,
 ) as dag:
-    create_data_table() >> etl()
-    etl() >> verify_recent_data()
+    create_data_table() >> etl() >> verify_recent_data()
