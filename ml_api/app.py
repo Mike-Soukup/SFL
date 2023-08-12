@@ -42,10 +42,18 @@ def output():
         # Create file path:
         img1_path = os.path.join(app.config['UPLOAD_FOLDER'], img1_filename)
 
+        #Make Prediction
         prediction = make_prediction(img1_path)
+
+        # Create JSON-like output to simulate REST API:
+        rest = {'predicted_class':prediction}
+
+        # # File Cleanup:
+        # os.remove(os.path.join(app.config['UPLOAD_FOLDER'], img1_path))
 
         return render_template(
             "output.html",
             image_1=img1_path,
             prediction = prediction,
+            rest = rest,
         )
