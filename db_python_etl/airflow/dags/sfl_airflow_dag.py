@@ -10,7 +10,8 @@ from airflow.decorators import task
 from airflow.utils.dates import days_ago
 from airflow.operators.empty import EmptyOperator
 
-@task(task_id = "create_data_table")
+
+@task(task_id="create_data_table")
 def create_data_table(**kwargs):
     def connect_to_postgres(
         database: str = "postgres",
@@ -35,7 +36,6 @@ def create_data_table(**kwargs):
         logging.info("Connection to PostgreSQL Established.")
         return cur, conn
 
-
     def create_db(cur, db_name: str = None):
         """Function to create a new database in PostgreSQL."""
         sql = f"""
@@ -48,7 +48,6 @@ def create_data_table(**kwargs):
         except psycopg2.errors.DuplicateDatabase:
             logging.warning("Database already exists!")
             cur.close()
-
 
     def create_destination_table(db_name: str = None):
         """Create the persons destination table in PostgreSQL"""
@@ -76,7 +75,7 @@ def create_data_table(**kwargs):
         cur.execute(sql)
         cur.close()
         logging.info("Table Created Successfully!")
-    
+
     password = "MounT@inM@n1992"
     db_name = "SFL"
     cur, conn = connect_to_postgres(password=password)
@@ -85,45 +84,43 @@ def create_data_table(**kwargs):
     conn.commit()
     conn.close()
 
-@task(task_id = "etl")
+
+@task(task_id="etl")
 def etl(**kwargs):
     GENDER_MAP = {
-    "Genderfluid": "GF",
-    "Female": "F",
-    "Genderqueer": "GQ",
-    "Male": "M",
-    "Agender": "A",
-    "Bigender": "B",
-    "Polygender": "P",
-    "Non-binary": "NB",
+        "Genderfluid": "GF",
+        "Female": "F",
+        "Genderqueer": "GQ",
+        "Male": "M",
+        "Agender": "A",
+        "Bigender": "B",
+        "Polygender": "P",
+        "Non-binary": "NB",
     }
-
 
     def read_data(path: str = None) -> pd.DataFrame:
         """Return pandas data frame provided a .csv file path"""
         ### Make sure path is relative to DAG location:
         return pd.read_csv(path)
 
-
     def apply_gender_map(df: pd.DataFrame, map: dict = None) -> pd.DataFrame:
         """Map gender to 1 or 2 letter acronyms provided mapping"""
         df["gender"] = df["gender"].apply(lambda x: GENDER_MAP.get(x, "UNKWN"))
         return df
 
-
     def create_pk(df: pd.DataFrame) -> pd.DataFrame:
         """Driver function to hash pii to create primary key"""
-        df["concat"] = df["first_name"] + df["last_name"] + df["email"] + df["ip_address"]
+        df["concat"] = (
+            df["first_name"] + df["last_name"] + df["email"] + df["ip_address"]
+        )
         df["hash"] = df["concat"].apply(lambda x: hashlib.md5(x.encode()).hexdigest())
         df.drop(columns=["concat"], axis=1, inplace=True)
         return df
-
 
     def create_timestamp(df: pd.DataFrame) -> pd.DataFrame:
         """Create timestamp for data"""
         df["timestamp"] = datetime.timestamp(datetime.now())
         return df
-
 
     def load_data(df: pd.DataFrame):
         """Driver function to enter data into PostgreSQL"""
@@ -146,6 +143,13 @@ def etl(**kwargs):
                             ip_address,
                             timestamp)
         VALUES (%s,%s,%s,%s,%s,%s,%s,%s)
+        ON CONFLICT (hash)
+        DO UPDATE
+        SET id = EXCLUDED.id,
+            gender = EXCLUDED.gender,
+            ip_address = EXCLUDED.ip_address,
+            timestamp = EXCLUDED.timestamp;
+
         """
         cur = conn.cursor()
         for index, row in df.iterrows():
@@ -163,7 +167,6 @@ def etl(**kwargs):
             conn.commit()
         cur.close()
         conn.close()
-
 
     def etl_driver(path):
         """Driver function for executing ETL operations"""
@@ -186,11 +189,12 @@ def etl(**kwargs):
         ### Load data into PostgreSQL
         load_data(df)
         logging.info("Data loaded into PostgreSQL!")
-    
+
     path = "/Users/mikesoukup/Desktop/NextLevel/Deloitte/SFL/db_python_etl/airflow/SRDataEngineerChallenge_DATASET.csv"
     etl_driver(path)
 
-@task(task_id = "data_check")
+
+@task(task_id="data_check")
 def verify_recent_data(**kwargs):
     def pull_data():
         """Driver function to pull data from person table"""
@@ -217,7 +221,6 @@ def verify_recent_data(**kwargs):
         data = cur.fetchall()
         return data
 
-
     def determine_freshness(d):
         """Function to log how fresh the data is"""
         ### Get most recent entry timestamp:
@@ -239,14 +242,15 @@ def verify_recent_data(**kwargs):
 
 
 args = {
-    'owner':'Mike Soukup',
-    'start_date':days_ago(1),
+    "owner": "Mike Soukup",
+    "start_date": days_ago(1),
     "retries": 2,
+    "catchup":False,
 }
-    
+
 with DAG(
-    dag_id = "SFL_Airflow_ETL",
-    schedule = "@hourly",
-    default_args = args,
+    dag_id="SFL_Airflow_ETL",
+    schedule="@hourly",
+    default_args=args,
 ) as dag:
     create_data_table() >> etl() >> verify_recent_data()
