@@ -9,14 +9,14 @@ For this task, I chose to create a relational database with on a local PostgreSQ
 One database was created to support the storage of this data. A MD5 hashed string was chosen as the primary key for this dataset with the aim of protecting PII if this table were to serve as a dimension for other tables. Protecting PII, such as that information contained within this dataset, by minimizing the spread of the data is paramount to proper data governance and privacy. 
 
 The schema for the created `persons` table is as follows:
-PK - hash (varchar(50))
-id (smallint)
-first_name (varchar(50))
-last_name (varchar(50))
-email (varchar(50))
-gender (varchar(2))
-ip_address (varchar(20))
-timestamp (numeric)
+PK - hash (varchar(50)) <br>
+id (smallint) <br>
+first_name (varchar(50)) <br>
+last_name (varchar(50)) <br>
+email (varchar(50)) <br>
+gender (varchar(2)) <br>
+ip_address (varchar(20)) <br>
+timestamp (numeric) <br>
 
 ## ETL Tasks:
 
@@ -34,3 +34,11 @@ The ETL tasks for this pipeline will create the target `persons` database if one
     - Open a web browser and in the address bar type: `localhost:8080`
 Here you should see the Airflow GUI and the SFL_Airflow_ETL DAG in the DAGs tab
 7. Turn the DAG On to run the ETL Pipeline
+
+### Opportunities for Future Improvement:
+- Modularize source code
+- Use hosted deployments of Airflow and PostgreSQL
+- Better understanding of data and business objective;
+    - Where is the data coming from?
+    - What will stakeholders be using the data for?
+    - What industry regulations and requirements must data storage conform to?
