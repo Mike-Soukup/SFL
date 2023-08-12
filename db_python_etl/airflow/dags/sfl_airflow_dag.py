@@ -245,12 +245,12 @@ args = {
     "owner": "Mike Soukup",
     "start_date": days_ago(1),
     "retries": 2,
-    "catchup":False,
 }
 
 with DAG(
     dag_id="SFL_Airflow_ETL",
     schedule="@hourly",
     default_args=args,
+    catchup = False,
 ) as dag:
     create_data_table() >> etl() >> verify_recent_data()
