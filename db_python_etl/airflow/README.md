@@ -8,7 +8,7 @@ For this task, I chose to create a relational database with on a local PostgreSQ
 
 One database was created to support the storage of this data. A MD5 hashed string was chosen as the primary key for this dataset with the aim of protecting PII if this table were to serve as a dimension for other tables. Protecting PII, such as that information contained within this dataset, by minimizing the spread of the data is paramount to proper data governance and privacy. 
 
-The schema for the created `persons` table is as follows:
+The schema for the created `persons` table is as follows:<br>
 PK - hash (varchar(50)) <br>
 id (smallint) <br>
 first_name (varchar(50)) <br>
