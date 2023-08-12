@@ -17,3 +17,8 @@ app.config['RESPONSE_FOLDER'] = RESPONSE_FOLDER
 def welcome():
     """Fashion MNIST API Landing Page."""
     return render_template("home.html")
+
+@app.route("/upload", methods=["GET", "POST"])
+def upload():
+    """Upload image."""
+    return render_template("upload.html")
