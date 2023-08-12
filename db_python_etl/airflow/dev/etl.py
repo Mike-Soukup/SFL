@@ -65,6 +65,13 @@ def load_data(df: pd.DataFrame):
                          ip_address,
                          timestamp)
     VALUES (%s,%s,%s,%s,%s,%s,%s,%s)
+    ON CONFLICT (hash)
+    DO UPDATE
+    SET id = EXCLUDED.id,
+        gender = EXCLUDED.gender,
+        ip_address = EXCLUDED.ip_address,
+        timestamp = EXCLUDED.timestamp;
+
     """
     cur = conn.cursor()
     for index, row in df.iterrows():
