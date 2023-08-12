@@ -1,27 +1,32 @@
-'''Demo script for creating our target table in PostgreSQL'''
+"""Demo script for creating our target table in PostgreSQL"""
 ### Import Libraries
 import logging
 import psycopg2
 
-def connect_to_postgres(database: str = 'postgres',
-                        user: str = 'postgres',
-                        host: str = 'localhost',
-                        password: str = None,
-                        post: str = '5433',
-                        **kwargs):
-    ''''This function will return a connection cursor
-    to a locally hosted PostgreSQL Database.'''
+
+def connect_to_postgres(
+    database: str = "postgres",
+    user: str = "postgres",
+    host: str = "localhost",
+    password: str = None,
+    post: str = "5433",
+    **kwargs,
+):
+    """'This function will return a connection cursor
+    to a locally hosted PostgreSQL Database."""
 
     conn = psycopg2.connect(
-        database = database,
-        user = "postgres",
-        password = password,
-        host = "localhost",
-        port = "5433"
+        database=database,
+        user="postgres",
+        password=password,
+        host="localhost",
+        port="5433",
     )
-    conn.autocommit = True 
+    conn.autocommit = True
     cur = conn.cursor()
+    logging.info("Connection to PostgreSQL Established.")
     return cur, conn
+
 
 def create_db(cur, db_name: str = None):
     """Function to create a new database in PostgreSQL."""
@@ -36,11 +41,11 @@ def create_db(cur, db_name: str = None):
         logging.warning("Database already exists!")
         cur.close()
 
+
 def create_destination_table(db_name: str = None):
     """Create the persons destination table in PostgreSQL"""
-    cur, _= connect_to_postgres(database = db_name,
-                              password = 'MounT@inM@n1992')
-    
+    cur, _ = connect_to_postgres(database=db_name, password="MounT@inM@n1992")
+
     sql = """
         CREATE TABLE IF NOT EXISTS public.persons
         (
@@ -62,15 +67,14 @@ def create_destination_table(db_name: str = None):
         """
     cur.execute(sql)
     cur.close()
+    logging.info("Table Created Successfully!")
 
-if __name__ == '__main__':
-    password = 'MounT@inM@n1992'
-    db_name = 'SFL'
-    cur, conn = connect_to_postgres(password = password)
-    create_db(cur, db_name = db_name)
-    create_destination_table(db_name = db_name)
+
+if __name__ == "__main__":
+    password = "MounT@inM@n1992"
+    db_name = "SFL"
+    cur, conn = connect_to_postgres(password=password)
+    create_db(cur, db_name=db_name)
+    create_destination_table(db_name=db_name)
     conn.commit()
     conn.close()
-
-
-
