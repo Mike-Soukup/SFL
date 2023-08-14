@@ -38,6 +38,12 @@ Here you should see the Airflow GUI and the SFL_Airflow_ETL DAG in the DAGs tab
 
 [Demonstration Video](https://youtu.be/fBfXb-7X1mY)
 
+### ETL Pipeline in GCP:
+
+In addition to the ETL Pipeline I wrote in Airflow, I also created a quick cloud based solution using GCP Cloud Storage, BigQuery, and DataPrep. I wanted to share this example since this is a cloud based, low code solution. I think this type of implementaiton would be great to integrate with teams that want to manage their data, but don't know how to code. 
+
+[Cloud Storage -> DataPrep -> BigQuery](https://youtu.be/rQxzZBW_iRU)
+
 ### Opportunities for Future Improvement:
 - Modularize source code
 - Use hosted deployments of Airflow and PostgreSQL
