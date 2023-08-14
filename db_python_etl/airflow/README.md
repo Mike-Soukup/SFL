@@ -25,7 +25,7 @@ The ETL tasks for this pipeline will create the target `persons` database if one
 ### Run Instructions:
 In order to run this DAG in Airflow, there are two pre-requisites. First, this repo must be cloned and second there must be an active instance of Airflow.
 
-1. Be sure to enter your own credentials for accessing the PostgreSQL database you wish to store this data in.
+1. Be sure to enter your own credentials for accessing the PostgreSQL database. For instance, look for the `YOUR_CREDENTIALS` string in the dag file and enter your password. 
 2. Source the virtual environment located in `.airflow_venv`
 3. Set up environemnt by executing: `make install`
 4. Start the Airflow Webserver by executing: `./airflow_start.sh` -- or call `make webserver`
