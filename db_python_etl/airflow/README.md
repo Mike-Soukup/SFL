@@ -18,6 +18,8 @@ gender (varchar(2)) <br>
 ip_address (varchar(20)) <br>
 timestamp (numeric) <br>
 
+The initial EDA work to arrive at these conclusions can be found in the `dev` directory.
+
 ## ETL Tasks:
 
 The ETL tasks for this pipeline will create the target `persons` database if one does not exist already. Transform the provided data by creating an MD5 hashed primary key, mapping the gender column to one or two letter acronyms, and applying a timestamp to the data. Once the data has been transformed sufficiently, it will be loaded into the `persons` table. Finally, there will be a routine check to validate if the data in the table has gone stale (i.e. becoming old and potentially irrelevant)
