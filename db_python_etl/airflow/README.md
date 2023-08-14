@@ -36,6 +36,8 @@ In order to run this DAG in Airflow, there are two pre-requisites. First, this r
 Here you should see the Airflow GUI and the SFL_Airflow_ETL DAG in the DAGs tab
 7. Turn the DAG On to run the ETL Pipeline
 
+[Demonstration Video](https://youtu.be/fBfXb-7X1mY)
+
 ### Opportunities for Future Improvement:
 - Modularize source code
 - Use hosted deployments of Airflow and PostgreSQL
