@@ -51,7 +51,7 @@ def create_data_table(**kwargs):
 
     def create_destination_table(db_name: str = None):
         """Create the persons destination table in PostgreSQL"""
-        cur, _ = connect_to_postgres(database=db_name, password="MounT@inM@n1992")
+        cur, _ = connect_to_postgres(database=db_name, password="YOUR_CREDENTIALS")
 
         sql = """
             CREATE TABLE IF NOT EXISTS public.persons
@@ -76,7 +76,7 @@ def create_data_table(**kwargs):
         cur.close()
         logging.info("Table Created Successfully!")
 
-    password = "MounT@inM@n1992"
+    password = "YOUR_CREDENTIALS"
     db_name = "SFL"
     cur, conn = connect_to_postgres(password=password)
     create_db(cur, db_name=db_name)
@@ -129,7 +129,7 @@ def etl(**kwargs):
             host="localhost",
             database="SFL",
             user="postgres",
-            password="MounT@inM@n1992",
+            password="YOUR_CREDENTIALS",
             port="5433",
         )
 
@@ -204,7 +204,7 @@ def verify_recent_data(**kwargs):
             host="localhost",
             database="SFL",
             user="postgres",
-            password="MounT@inM@n1992",
+            password="YOUR_CREDENTIALS",
             port="5433",
         )
         cur = conn.cursor()

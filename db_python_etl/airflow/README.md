@@ -25,16 +25,17 @@ The ETL tasks for this pipeline will create the target `persons` database if one
 ### Run Instructions:
 In order to run this DAG in Airflow, there are two pre-requisites. First, this repo must be cloned and second there must be an active instance of Airflow.
 
-1. Source the virtual environment located in `.airflow_venv`
-2. Set up environemnt by executing: `make install`
-3. Start the Airflow Webserver by executing: `./airflow_start.sh` -- or call `make webserver`
+1. Be sure to enter your own credentials for accessing the PostgreSQL database you wish to store this data in.
+2. Source the virtual environment located in `.airflow_venv`
+3. Set up environemnt by executing: `make install`
+4. Start the Airflow Webserver by executing: `./airflow_start.sh` -- or call `make webserver`
     Enter any password as desired
-4. Open another terminal and source the virtual environment
-5. Start the Airflow Scheduler by executing: `./airflow_scheduler.sh` -- or call `make scheduler`
-6. Open webpage to localhost port 8080
+5. Open another terminal and source the virtual environment
+6. Start the Airflow Scheduler by executing: `./airflow_scheduler.sh` -- or call `make scheduler`
+7. Open webpage to localhost port 8080
     - Open a web browser and in the address bar type: `localhost:8080`
 Here you should see the Airflow GUI and the SFL_Airflow_ETL DAG in the DAGs tab
-7. Turn the DAG On to run the ETL Pipeline
+8. Turn the DAG On to run the ETL Pipeline
 
 [Demonstration Video](https://youtu.be/fBfXb-7X1mY)
 
