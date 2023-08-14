@@ -20,7 +20,7 @@ timestamp (numeric) <br>
 
 ## ETL Tasks:
 
-The ETL tasks for this pipeline will create the target `persons` database if one does not exist already. Transform the provided data by creating an MD5 hashed primary key, mapping the gender column to two letter acronyms, and applying a timestamp to the data. Once the data has been transformed sufficiently, it will be loaded into the `persons` table. Finally, there will be a routine check to validate if the data in the table has gone stale (i.e. becoming old and potentially irrelevant)
+The ETL tasks for this pipeline will create the target `persons` database if one does not exist already. Transform the provided data by creating an MD5 hashed primary key, mapping the gender column to one or two letter acronyms, and applying a timestamp to the data. Once the data has been transformed sufficiently, it will be loaded into the `persons` table. Finally, there will be a routine check to validate if the data in the table has gone stale (i.e. becoming old and potentially irrelevant)
 
 ### Run Instructions:
 In order to run this DAG in Airflow, there are two pre-requisites. First, this repo must be cloned and second there must be an active instance of Airflow.
