@@ -1,6 +1,6 @@
 # Overview:
 
-This repository represents the work I conducted on the SFL Scientific Take Home Assessment from 2023-08-11 through 2023-08-14.
+This repository represents the work I conducted on the SFL Scientific Take Home Assessment from 2023-08-11 through 2023-08-13.
 
 ## Part 1 - Consulting Soft Skills:
 
