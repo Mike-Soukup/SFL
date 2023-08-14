@@ -109,7 +109,7 @@ def etl(**kwargs):
         return df
 
     def create_pk(df: pd.DataFrame) -> pd.DataFrame:
-        """Driver function to hash pii to create primary key"""
+        """Helper function to hash pii to create primary key"""
         df["concat"] = (
             df["first_name"] + df["last_name"] + df["email"] + df["ip_address"]
         )
@@ -123,7 +123,7 @@ def etl(**kwargs):
         return df
 
     def load_data(df: pd.DataFrame):
-        """Driver function to enter data into PostgreSQL"""
+        """Helper function to enter data into PostgreSQL"""
         ### Establish DB Connection
         conn = psycopg2.connect(
             host="localhost",
@@ -197,7 +197,7 @@ def etl(**kwargs):
 @task(task_id="data_check")
 def verify_recent_data(**kwargs):
     def pull_data():
-        """Driver function to pull data from person table"""
+        """Helper function to pull data from person table"""
 
         ### Estbalish connection to the Database
         conn = psycopg2.connect(
